@@ -1,16 +1,19 @@
 import express from "express";
 import fetch from "node-fetch";
-import cors from "cors";
 
 const app = express();
 app.use(express.json());
 
-// CORS freigeben – muss VOR den Routen stehen
-app.use(cors({
-  origin: "*", // erlaubt alle Domains (oder spezifisch: "https://r-l-a.github.io")
-  methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+// CORS manuell freigeben – wichtig für GitHub Pages
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://r-l-a.github.io"); // deine Domain
+  res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
