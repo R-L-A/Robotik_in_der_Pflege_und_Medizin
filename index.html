@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KI Chat</title>
+  <style>
+    #chatbox { border: 1px solid #ccc; padding: 10px; width: 400px; height: 300px; overflow-y: auto; }
+    #input { width: 300px; }
+  </style>
+</head>
+<body>
+  <h2>KI Chat Overlay</h2>
+  <div id="chatbox"></div>
+  <input id="input" type="text" placeholder="Nachricht eingeben..." />
+  <button onclick="sendMessage()">Senden</button>
+
+  <script>
+    async function sendMessage() {
+      const msg = document.getElementById("input").value;
+      document.getElementById("chatbox").innerHTML += `<p><b>Du:</b> ${msg}</p>`;
+      
+      const response = await fetch("https://DEIN-BACKEND.onrender.com/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg })
+      });
+      const data = await response.json();
+      document.getElementById("chatbox").innerHTML += `<p><b>KI:</b> ${data.reply}</p>`;
+    }
+  </script>
+</body>
+</html>
