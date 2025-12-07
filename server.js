@@ -28,6 +28,10 @@ app.post("/chat", async (req, res) => {
     const chatCompletion = await client.chat.completions.create({
       model: "deepseek-ai/DeepSeek-V3.2:novita", // Modellname im Router-Format
       messages: [
+        {
+          role: "system",
+          content: "Du bist eine hilfreiche KI, spezialisiert auf Robotik in der Pflege und Medizin. Antworte ausschließlich zu diesem Thema und weiche nicht davon ab."
+        },
         { role: "user", content: userMessage }
       ],
     });
