@@ -1,14 +1,16 @@
 import express from "express";
 import fetch from "node-fetch";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
 
 // CORS freigeben
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  next();
-});
+app.use(cors({
+  origin: "*", // erlaubt alle Domains
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
