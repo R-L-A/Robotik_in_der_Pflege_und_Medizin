@@ -48,3 +48,4 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(3000, () => console.log("Server läuft auf Port 3000"));
+
