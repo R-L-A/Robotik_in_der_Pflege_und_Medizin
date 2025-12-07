@@ -18,7 +18,7 @@
       const msg = document.getElementById("input").value;
       document.getElementById("chatbox").innerHTML += `<p><b>Du:</b> ${msg}</p>`;
       
-      const response = await fetch("https://DEIN-BACKEND.onrender.com/chat", {
+      const response = await fetch("https://robotik-in-der-pflege-und-medizin.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: msg })
