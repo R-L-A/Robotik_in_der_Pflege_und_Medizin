@@ -13,7 +13,7 @@ app.use((req, res, next) => {
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
 
-  const response = await fetch("https://huggingface.co/deepseek-ai/DeepSeek-V3.2", {
+  const response = await fetch("https://api-inference.huggingface.co/models/deepseek-ai/DeepSeek-V3.2", {
     method: "POST",
     headers: {
       "Authorization": "Bearer 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",
@@ -23,9 +23,18 @@ app.post("/chat", async (req, res) => {
   });
 
   const data = await response.json();
-  console.log(data); // wichtig zum Debuggen
-  res.json({ reply: data[0]?.generated_text || "Keine Antwort erhalten." });
+  console.log("HF Response:", data);
+
+  let reply = "Keine Antwort erhalten.";
+  if (Array.isArray(data) && data[0]?.generated_text) {
+    reply = data[0].generated_text;
+  } else if (data.generated_text) {
+    reply = data.generated_text;
+  } else if (data.error) {
+    reply = "Fehler: " + data.error;
+  }
+
+  res.json({ reply });
 });
 
 app.listen(3000, () => console.log("Server läuft auf Port 3000"));
-
