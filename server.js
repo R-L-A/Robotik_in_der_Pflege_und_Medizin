@@ -1,5 +1,5 @@
 import express from "express";
-import fetch from "node-fetch";
+import { OpenAI } from "openai";
 
 const app = express();
 app.use(express.json());
@@ -15,31 +15,24 @@ app.use((req, res, next) => {
   next();
 });
 
+// Hugging Face Router über OpenAI-Client
+const client = new OpenAI({
+  baseURL: "https://router.huggingface.co/v1",
+  apiKey: process.env.HF_TOKEN, // Hugging Face Token als Env-Variable setzen!
+});
+
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
 
   try {
-    const response = await fetch("https://router.huggingface.co/models/deepseek-ai/DeepSeek-V3.2", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer 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",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ inputs: userMessage })
+    const chatCompletion = await client.chat.completions.create({
+      model: "deepseek-ai/DeepSeek-V3.2:novita", // Modellname im Router-Format
+      messages: [
+        { role: "user", content: userMessage }
+      ],
     });
 
-    const data = await response.json();
-    console.log("HF Response:", data);
-
-    let reply = "Keine Antwort erhalten.";
-    if (Array.isArray(data) && data[0]?.generated_text) {
-      reply = data[0].generated_text;
-    } else if (data.generated_text) {
-      reply = data.generated_text;
-    } else if (data.error) {
-      reply = "Fehler: " + data.error;
-    }
-
+    const reply = chatCompletion.choices?.[0]?.message?.content || "Keine Antwort erhalten.";
     res.json({ reply });
   } catch (err) {
     console.error("Backend Error:", err);
@@ -48,4 +41,3 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(3000, () => console.log("Server läuft auf Port 3000"));
-
