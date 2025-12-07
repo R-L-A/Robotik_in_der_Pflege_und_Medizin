@@ -7,7 +7,7 @@ app.use(express.json());
 
 // CORS freigeben
 app.use(cors({
-  origin: "*", // erlaubt alle Domains
+  origin: "*",
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
@@ -15,7 +15,7 @@ app.use(cors({
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
 
-  const response = await fetch("https://api-inference.huggingface.co/models/deepseek-ai/DeepSeek-V3.2", {
+  const response = await fetch("https://router.huggingface.co/models/deepseek-ai/DeepSeek-V3.2", {
     method: "POST",
     headers: {
       "Authorization": "Bearer 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",
