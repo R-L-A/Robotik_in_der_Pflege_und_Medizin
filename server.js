@@ -7,7 +7,7 @@ app.use(express.json());
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
 
-  const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
+  const response = await fetch("https://api-inference.huggingface.co/models/openai/gpt-oss-120b", {
     method: "POST",
     headers: {
       "Authorization": "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",
