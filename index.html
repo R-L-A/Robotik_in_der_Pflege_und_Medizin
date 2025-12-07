@@ -1,27 +1,17 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>KI Chat</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- CSS einbinden -->
-  <link rel="stylesheet" href="style.css">
+  <style>
+    #chatbox { border: 1px solid #ccc; padding: 10px; width: 400px; height: 300px; overflow-y: auto; }
+    #input { width: 300px; }
+  </style>
 </head>
 <body>
-  <div class="chat-container">
-    <!-- Nachrichtenbereich -->
-    <div class="messages" id="messages">
-      <!-- Beispielnachrichten -->
-      <div class="message ai">Hallo, ich bin deine KI!</div>
-      <div class="message user">Hi KI, erzähl mir was!</div>
-    </div>
-
-    <!-- Eingabefeld -->
-    <div class="input-area">
-      <input type="text" id="userInput" placeholder="Nachricht eingeben...">
-      <button onclick="sendMessage()">Senden</button>
-    </div>
-  </div>
+  <h2>KI Chat Overlay</h2>
+  <div id="chatbox"></div>
+  <input id="input" type="text" placeholder="Nachricht eingeben..." />
+  <button onclick="sendMessage()">Senden</button>
 
   <script>
     async function sendMessage() {
@@ -39,4 +29,5 @@
   </script>
 </body>
 </html>
+
 
