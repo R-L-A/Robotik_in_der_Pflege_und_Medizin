@@ -5,10 +5,10 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 
-// CORS freigeben
+// CORS freigeben – muss VOR den Routen stehen
 app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST"],
+  origin: "*", // erlaubt alle Domains (oder spezifisch: "https://r-l-a.github.io")
+  methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
