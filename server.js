@@ -13,7 +13,7 @@ app.use((req, res, next) => {
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
 
-  const response = await fetch("https://api-inference.huggingface.co/models/openai/gpt-oss-120b", {
+  const response = await fetch("https://huggingface.co/deepseek-ai/DeepSeek-V3.2", {
     method: "POST",
     headers: {
       "Authorization": "Bearer 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",
@@ -28,3 +28,4 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(3000, () => console.log("Server läuft auf Port 3000"));
+
