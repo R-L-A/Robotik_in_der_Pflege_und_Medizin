@@ -2,6 +2,7 @@
   "name": "ki-chat",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",              // wichtig, weil du "import" statt "require" nutzt
   "scripts": {
     "start": "node server.js"
   },
